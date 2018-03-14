@@ -1,5 +1,5 @@
 import './font-awesome/scss/font-awesome.scss';
-import './style.scss';
+import '../style.scss';
 
 var $ = require('jquery');
 

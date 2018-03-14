@@ -86,7 +86,8 @@ if(IS_PRODUCTION){
 
     console.log(styleLoaderRuels);
 
-}else{
+}
+else{
     extractStylePlugins = [];
     styleLoaderRuels = [
         {
@@ -120,13 +121,13 @@ if(IS_PRODUCTION){
 module.exports = {
     entry: {
         app: './src/index.js',
-        print: './src/print.js',
-        vendor: [
-            'lodash'
-        ]
+        // vendor: [
+        //     'lodash'
+        // ]
     },
     output: {
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+
     },
 
     module: {
@@ -156,17 +157,17 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({
             title: 'webpack demo',
-            template: './src/index.ejs',
+            template: './src/tpl/index.ejs',
             filename: 'index.html'
         }),
         new CleanWebpackPlugin(['dist']),
         ...extractStylePlugins,
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor' // 抽取出的模块的模块名
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name:'runtime'
-        })
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor' // 抽取出的模块的模块名
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name:'runtime'
+        // })
     ],
     externals: {
         'jquery': 'window.jQuery',
