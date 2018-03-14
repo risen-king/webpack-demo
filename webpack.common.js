@@ -117,12 +117,13 @@ if(IS_PRODUCTION){
 }
 
 
-
-
 module.exports = {
     entry: {
         app: './src/index.js',
-        print: './src/print.js'
+        print: './src/print.js',
+        vendor: [
+            'lodash'
+        ]
     },
     output: {
         path: path.resolve(__dirname, 'dist')

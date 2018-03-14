@@ -15,7 +15,7 @@ module.exports = {
     entry: {
         app: './src/index.js',
         vendor: [
-            'lodash'
+            'babel-polyfill'
         ]
         //print: './src/print.js'
         //another: './src/another.js'
