@@ -128,17 +128,16 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist')
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'webpack demo',
-            template: './src/index.ejs',
-            filename: 'index.html'
-        }),
-        new CleanWebpackPlugin(['dist'])
-    ],
+
     module: {
         rules: [
             ...styleLoaderRuels,
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            },
+
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
@@ -155,6 +154,12 @@ module.exports = {
 
     },
     plugins:[
+        new HtmlWebpackPlugin({
+            title: 'webpack demo',
+            template: './src/index.ejs',
+            filename: 'index.html'
+        }),
+        new CleanWebpackPlugin(['dist']),
         ...extractStylePlugins,
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor' // 抽取出的模块的模块名
