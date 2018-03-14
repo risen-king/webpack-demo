@@ -131,6 +131,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'webpack demo',
+            template: './src/index.ejs',
             filename: 'index.html'
         }),
         new CleanWebpackPlugin(['dist'])
