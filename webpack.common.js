@@ -2,6 +2,122 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const IS_PRODUCTION =  Boolean(process.env.NODE_ENV === 'production');
+
+console.log("*******************************");
+console.log(IS_PRODUCTION);
+console.log("*******************************");
+
+let extractStylePlugins = [];
+let styleLoaderRuels = [];
+if(IS_PRODUCTION){
+    const extractCss = new ExtractTextPlugin({
+        filename: "[name].[contenthash].css",
+    });
+
+    const extractSass = new ExtractTextPlugin({
+        filename: "[name].[contenthash].css",
+    });
+
+    const extractLess = new ExtractTextPlugin({
+        filename: "[name].[contenthash].css",
+    });
+
+    extractStylePlugins = [
+        extractCss,
+        extractSass,
+        extractLess
+    ];
+
+    styleLoaderRuels = [
+        {
+            test: /\.css$/,
+            use: extractSass.extract({
+                use:[{
+                    loader: "css-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                }] ,
+                fallback: 'style-loader'
+            }),
+
+        },
+        {
+            test: /\.scss$/,
+            use: extractSass.extract({
+                use:[{
+                    loader: "css-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                }] ,
+                fallback: 'style-loader'
+            }),
+
+        },
+        {
+            test:/\.less$/,
+            use: extractLess.extract({
+                use: [{
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                },{
+                    loader:'less-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }],
+                fallback: "style-loader"
+            })
+        },
+    ]
+
+    console.log(styleLoaderRuels);
+
+}else{
+    extractStylePlugins = [];
+    styleLoaderRuels = [
+        {
+            test: /\.css$/,
+            use:[
+                "style-loader",
+                "css-loader"
+            ]
+        },
+        {
+            test: /\.scss$/,
+            use: [
+                'style-loader',
+                "css-loader",
+                "sass-loader"
+            ]
+        },
+        {
+            test: /\.less$/,
+            use: [
+                'style-loader',
+                "css-loader",
+                "less-loader"
+            ]
+
+        }
+    ];
+}
+
+
+
+
 module.exports = {
     entry: {
         app: './src/index.js',
@@ -19,13 +135,7 @@ module.exports = {
     ],
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
+            ...styleLoaderRuels,
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
@@ -39,5 +149,9 @@ module.exports = {
                 ]
             }
         ]
-    }
+
+    },
+    plugins:[
+        ...extractStylePlugins
+    ]
 };
