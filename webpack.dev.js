@@ -17,12 +17,21 @@ module.exports = {
 
     },
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].bundle.js',
+        filename: 'app.bundle.js',
+        //chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
+            {
+                test: /\.(js|jsx)$/,
+                use:[
+
+                    'babel-loader'
+                ],
+                exclude: /node_modules/,
+
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -50,6 +59,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             title: 'webpack demo',
+            template: './src/tpl/index.ejs',
             filename: 'index.html'
         }),
         new webpack.HashedModuleIdsPlugin(),

@@ -1,36 +1,30 @@
-import _ from 'lodash';
-import printMe from './print.js';
-//import './style.scss';
-// import Icon from './icon.jpg';
-// import Data from './data.json';
-
-function component() {
-    const element = document.createElement('div');
-    const btn = document.createElement('button');
-
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+// App.js
 
 
-    btn.innerHTML = 'Click me and check the console!';
-    btn.onclick = printMe;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader'
+import App from './containers/App'
 
-    element.appendChild(btn);
+const rootEle = document.getElementById('root');
 
-    return element;
+function render(Component){
+    ReactDOM.render(
+        <AppContainer>
+            <Component />
+        </AppContainer>,
+        rootEle
+    );
 }
 
-var element = component();
-document.body.appendChild(element);
+render(App);
 
-if(module.hot) { // 习惯上我们会检查是否可以访问 `module.hot` 属性
-    module.hot.accept('./print.js', function() { // 接受给定依赖模块的更新，并触发一个回调函数来对这些更新做出响应
-        console.log('*************************************************');
-        console.log('Accepting the updated printMe module!');
-        printMe();
-
-        document.body.removeChild(element);
-        element = component();
-        document.body.appendChild(element);
-        console.log('*************************************************');
-    });
+if(module.hot){
+    module.hot.accept('./containers/App', () => {
+        render(require('./containers/App').default)
+    })
 }
+
+
+
+
