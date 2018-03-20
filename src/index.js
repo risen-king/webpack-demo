@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader'
 import RedBox from 'redbox-react'
 
-import App from './containers/App'
+import App from './components/App'
 
 
 const rootEle = document.getElementById('root');
@@ -36,8 +36,8 @@ function render(Component){
 render(App);
 
 if(module.hot){
-    module.hot.accept('./containers/App', () => {
-        render(require('./containers/App').default)
+    module.hot.accept('./components/App', () => {
+        render(require('./components/App').default)
     })
 }
 
