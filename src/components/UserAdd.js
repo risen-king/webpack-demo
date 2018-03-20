@@ -2,6 +2,8 @@ import React,{ Component } from 'react'
 import formProvider from '../util/formProvider'
 import FormItem from './FormItem';
 
+let userAddUrl = 'http://localhost:3000/user';
+
 class UserAdd extends React.Component {
 
     handleSubmit (e) {
@@ -14,7 +16,7 @@ class UserAdd extends React.Component {
             return ;
         }
 
-        fetch('http://localhost:3000/user', {
+        fetch(userAddUrl, {
                     method: 'post',
                     // 使用fetch提交的json数据需要使用JSON.stringify转换为字符串
                     body: JSON.stringify({
@@ -32,6 +34,7 @@ class UserAdd extends React.Component {
                 // 所以可以使用res.id来判断添加是否成功
                 if (res.id) {
                     alert('添加用户成功');
+                    this.context.router.push('/user/list');
                 } else {
                     alert('添加失败');
                 }
@@ -87,6 +90,10 @@ class UserAdd extends React.Component {
             </div>
         )
     }
+}
+
+UserAdd.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
 
 let fields = {

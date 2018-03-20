@@ -8,8 +8,10 @@ import RedBox from 'redbox-react'
 import { Router, Route, hashHistory } from 'react-router'
 
 import App from './components/App'
-import UserAdd from './components/UserAdd'
 import Home from './components/Home'
+import UserAdd from './components/UserAdd'
+import UserList from './components/UserList'
+
 
 const rootEle = document.getElementById('root');
 
@@ -17,7 +19,7 @@ let router = (
     <Router history={hashHistory}>
         <Route path="/" component={Home}></Route>
         <Route path="/user/add" component={UserAdd}/>
-
+        <Route path="/user/list" component={UserList}/>
     </Router>
 );
 
