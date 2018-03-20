@@ -2,21 +2,32 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { AppContainer } from 'react-hot-loader'
 import RedBox from 'redbox-react'
+import { Router, Route, hashHistory } from 'react-router'
 
 import App from './components/App'
-
+import UserAdd from './components/UserAdd'
+import Home from './components/Home'
 
 const rootEle = document.getElementById('root');
 
-function render(Component){
+let router = (
+    <Router history={hashHistory}>
+        <Route path="/" component={Home}></Route>
+        <Route path="/user/add" component={UserAdd}/>
+
+    </Router>
+);
+
+function render(router){
     try{
         //throw new Error('boom');
 
         ReactDOM.render(
             <AppContainer>
-                <Component />
+                {router}
             </AppContainer>,
             rootEle
         );
@@ -24,7 +35,7 @@ function render(Component){
         ReactDOM.render(
             <RedBox error={e}>
                 <AppContainer>
-                    <Component />
+                    {router}
                 </AppContainer>
             </RedBox>,
             rootEle
@@ -33,11 +44,21 @@ function render(Component){
 
 }
 
-render(App);
+
+
+// render(App);
+//
+// if(module.hot){
+//     module.hot.accept('./components/App', () => {
+//         render(require('./components/App').default)
+//     })
+// }
+
+render(router);
 
 if(module.hot){
     module.hot.accept('./components/App', () => {
-        render(require('./components/App').default)
+        render(router)
     })
 }
 
