@@ -1,6 +1,7 @@
 import React,{ Component } from 'react'
 import formProvider from '../util/formProvider'
 import FormItem from './FormItem';
+import HomeLayout from '../layouts/HomeLayout';
 
 let userAddUrl = 'http://localhost:3000/user';
 
@@ -48,12 +49,8 @@ class UserAdd extends React.Component {
         const {form: {name, age, gender},  onFormChange} = this.props;
 
         return (
-            <div>
-                <header>
-                    <h1>添加用户</h1>
-                </header>
 
-                <main>
+                <HomeLayout>
                     <form onSubmit={(e) => this.handleSubmit(e)}>
                         <FormItem label="用户名" valid={name.valid} error={name.error}>
                             <input
@@ -86,8 +83,8 @@ class UserAdd extends React.Component {
                         <br/>
                         <input type="submit" value="提交"/>
                     </form>
-                </main>
-            </div>
+                </HomeLayout>
+
         )
     }
 }

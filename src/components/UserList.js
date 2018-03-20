@@ -1,4 +1,5 @@
-import React,{ Component } from 'react'
+import React,{ Component } from 'react';
+import HomeLayout from '../layouts/HomeLayout';
 let userListUrl = 'http://localhost:3000/user';
 
 class UserList extends  Component{
@@ -23,12 +24,8 @@ class UserList extends  Component{
     render(){
         const { userList } = this.state;
         return (
-            <div>
-                <header>
-                    <h1>用户列表</h1>
-                </header>
 
-                <main>
+                <HomeLayout>
                     <table>
                         <thead>
                         <tr>
@@ -54,8 +51,8 @@ class UserList extends  Component{
                         }
                         </tbody>
                     </table>
-                </main>
-            </div>
+                </HomeLayout>
+          
         );
     }
 }
