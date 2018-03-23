@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import HomeLayout from '../layouts/HomeLayout';
 
-import AutoComplete from './AutoComplete';
+import AutoComplete from '../components/AutoComplete';
 
 //import {Button} from 'antd';
 

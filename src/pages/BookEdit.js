@@ -1,45 +1,45 @@
 import React,{ Component } from 'react'
 
 import HomeLayout from '../layouts/HomeLayout';
-import UserEditor from '../components/UserEditor';
+import BookEditor from '../components/BookEditor';
 
-let getUserUrl = 'http://localhost:3000/user/';
+let getUrl = 'http://localhost:3000/user/';
 
-class UserEdit extends React.Component {
+class BookEdit extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            user: null
+            book: null
         }
     }
 
     componentWillMount(){
         let userId = this.props.params.id; //根据 url 获取 id
-        fetch(getUserUrl + userId)
+        fetch(getUrl + userId)
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    user: res
+                    book: res
                 });
             });
 
     }
  
     render(){
-        let {user} = this.state;
+        let {book} = this.state;
         return (
 
-                <HomeLayout title="编辑用户">
-                    { user ? <UserEditor editTarget={user}/> : '加载中...'}
+                <HomeLayout title="编辑书籍">
+                    { book ? <BookEditor editTarget={book}/> : '加载中...'}
                 </HomeLayout>
 
         )
     }
 }
 
-UserEdit.contextTypes = {
+BookEditor.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-export default  UserEdit;
+export default  BookEdit;
 

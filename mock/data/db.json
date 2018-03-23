@@ -1,16 +1,16 @@
 {
   "user": [
     {
-      "id": 10000,
       "name": "一韬",
-      "age": 25,
-      "gender": "male"
+      "price": 99,
+      "owner_id": "",
+      "id": 10000
     },
     {
-      "id": 10001,
       "name": "张三",
-      "age": 30,
-      "gender": "female"
+      "price": 33,
+      "owner_id": "",
+      "id": 10001
     },
     {
       "name": "rise",
@@ -33,16 +33,16 @@
   ],
   "book": [
     {
-      "id": 10000,
-      "name": "JavaScript从入门到精通",
-      "price": 9990,
-      "owner_id": 10000
+      "name": "一韬",
+      "price": 4,
+      "owner_id": "",
+      "id": 10000
     },
     {
-      "id": 10001,
-      "name": "Java从入门到放弃",
-      "price": 1990,
-      "owner_id": 10001
+      "name": "张三",
+      "price": 330,
+      "owner_id": "",
+      "id": 10001
     }
   ]
 }

@@ -8,20 +8,29 @@ import RedBox from 'redbox-react'
 import { Router, Route, hashHistory } from 'react-router'
 
 import App from './components/App'
-import Home from './components/Home'
+import Home from './pages/Home'
 
 import UserList from './pages/UserList';
 import UserAdd from './pages/UserAdd';
 import UserEdit from './pages/UserEdit';
+
+import BookList from './pages/BookList';
+import BookAdd from './pages/BookAdd';
+import BookEdit from './pages/BookEdit';
 
 const rootEle = document.getElementById('root');
 
 let router = (
     <Router history={hashHistory}>
         <Route path="/" component={Home}></Route>
-        <Route path="/user/add" component={UserAdd}/>
+
         <Route path="/user/list" component={UserList}/>
+        <Route path="/user/add" component={UserAdd}/>
         <Route path="/user/edit/:id" component={UserEdit}/>
+
+        <Route path="/book/list" component={BookList}/>
+        <Route path="/book/add" component={BookAdd}/>
+        <Route path="/book/edit/:id" component={BookEdit}/>
     </Router>
 );
 

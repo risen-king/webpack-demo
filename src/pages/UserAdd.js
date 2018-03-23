@@ -1,6 +1,5 @@
 import React,{ Component } from 'react'
-import formProvider from '../util/formProvider'
-import FormItem from '../components/FormItem';
+
 import HomeLayout from '../layouts/HomeLayout';
 import UserEditor from '../components/UserEditor';
 
