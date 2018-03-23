@@ -10,7 +10,7 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         hot: true, //告诉 dev-server 我们在用 HMR
-        hotOnly: true // 指定如果热加载失败了禁止刷新页面 (这是 webpack 的默认行为)，这样便于我们知道失败是因为何种错误
+        hotOnly: true
     },
     entry: {
         app: './src/index.js',
@@ -26,7 +26,6 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 use:[
-
                     'babel-loader'
                 ],
                 exclude: /node_modules/,
@@ -38,6 +37,15 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    "css-loader",
+                    "less-loader"
+                ]
+
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
@@ -62,7 +70,7 @@ module.exports = {
             template: './src/tpl/index.ejs',
             filename: 'index.html'
         }),
-        new webpack.HashedModuleIdsPlugin(),
+        //new webpack.HashedModuleIdsPlugin(),
 
         new webpack.HotModuleReplacementPlugin(), // 启用 HMR
         new webpack.NamedModulesPlugin() // 打印日志信息时 webpack 默认使用模块的数字 ID 指代模块，不便于 debug，这个插件可以将其替换为模块的真实路径

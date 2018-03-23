@@ -39,10 +39,11 @@ import React from 'react';
  * @returns {Function}
  */
 function formProvider (fields) {
+
     return function (Comp) {
 
-        const initialFormState = {};
-        for (const key in fields) {
+        let initialFormState = {};
+        for (let key in fields) {
             initialFormState[key] = {
                 value: fields[key].defaultValue,
                 error: ''
@@ -58,23 +59,40 @@ function formProvider (fields) {
                 };
 
                 this.handleValueChange = this.handleValueChange.bind(this);
+                this.setFormValues = this.setFormValues.bind(this);
+
             }
+
+            setFormValues(values){
+                if(!values){
+                    return;
+                }
+
+                let { form } = this.state;
+                let newForm = { ...form };
+                for(let field in form){
+                    if(form.hasOwnProperty(field)){ //定义在对象本身而不是继承自原型链
+                        if(typeof  values[field] !== 'undefined'){
+                            newForm[field] = {...newForm[field], value: values[field]};
+                        }
+                        // 正常情况下主动设置的每个字段一定是有效的
+                        newForm[field].valid = true;
+                    }
+                }
+
+                this.setState({form: newForm});
+            }
+
             handleValueChange (fieldName, value) {
                 const { form } = this.state;
 
-                const newFieldState = {value, valid: true, error: ''};
+                const newFieldState = {value: value, valid: true, error: ''};
 
-                const fieldRules = fields[fieldName].rules;
-
-                for (let i = 0; i < fieldRules.length; i++) {
-                    const {pattern, error} = fieldRules[i];
-                    let valid = false;
-                    if (typeof pattern === 'function') {
-                        valid = pattern(value);
-                    } else {
-                        valid = pattern.test(value);
-                    }
-
+                //验证字段规则
+                let fieldRules = fields[fieldName].rules;
+                for (let i = 0, len = fieldRules.length ; i < len ; i++) {
+                    let {pattern, error} = fieldRules[i];
+                    let valid = (typeof pattern === 'function') ? pattern(value) : pattern.test(value);
                     if (!valid) {
                         newFieldState.valid = false;
                         newFieldState.error = error;
@@ -82,17 +100,27 @@ function formProvider (fields) {
                     }
                 }
 
-                const newForm = {...form, [fieldName]: newFieldState};
-                const formValid = Object.values(newForm).every(f => f.valid);
-
+                let newForm = {...form, [fieldName]: newFieldState};
+                let formValid = Object.values(newForm).every(f => f.valid);
                 this.setState({
                     form: newForm,
                     formValid
                 });
             }
+
             render () {
                 const {form, formValid} = this.state;
-                return <Comp {...this.props} form={form} formValid={formValid} onFormChange={this.handleValueChange}/>
+                return (
+                    <Comp
+                        {...this.props}
+                        form={form}
+                        formValid={formValid}
+                        onFormChange={this.handleValueChange}
+                        setFormValues={this.setFormValues}
+                    />
+                );
+
+
             }
         }
 

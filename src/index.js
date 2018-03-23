@@ -9,9 +9,10 @@ import { Router, Route, hashHistory } from 'react-router'
 
 import App from './components/App'
 import Home from './components/Home'
-import UserAdd from './components/UserAdd'
-import UserList from './components/UserList'
 
+import UserList from './pages/UserList';
+import UserAdd from './pages/UserAdd';
+import UserEdit from './pages/UserEdit';
 
 const rootEle = document.getElementById('root');
 
@@ -20,6 +21,7 @@ let router = (
         <Route path="/" component={Home}></Route>
         <Route path="/user/add" component={UserAdd}/>
         <Route path="/user/list" component={UserList}/>
+        <Route path="/user/edit/:id" component={UserEdit}/>
     </Router>
 );
 

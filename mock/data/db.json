@@ -13,8 +13,9 @@
       "gender": "female"
     },
     {
-      "account": "admin",
-      "password": "123456",
+      "name": "rise",
+      "age": 0,
+      "gender": "",
       "id": 10002
     },
     {
@@ -23,7 +24,6 @@
       "gender": "male",
       "id": 10003
     },
-     
     {
       "name": "nnn",
       "age": 4,
