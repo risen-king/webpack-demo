@@ -1,5 +1,4 @@
-// App.js
-
+ 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,7 +6,6 @@ import { AppContainer } from 'react-hot-loader'
 import RedBox from 'redbox-react'
 import { Router, Route, hashHistory } from 'react-router'
 
-import App from './components/App'
 import Home from './pages/Home'
 
 import UserList from './pages/UserList';

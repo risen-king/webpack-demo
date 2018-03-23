@@ -3,7 +3,7 @@ import React,{ Component } from 'react'
 import Square from './Square';
 
 
-import calculateWinner from '../util/calculateWinner';
+import calculateWinner from './util/calculateWinner';
 
 class Board extends React.Component {
 
