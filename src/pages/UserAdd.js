@@ -3,7 +3,6 @@ import React,{ Component } from 'react'
 import HomeLayout from '../layouts/HomeLayout';
 import UserEditor from '../components/UserEditor';
 
-let userAddUrl = 'http://localhost:3000/user';
 
 class UserAdd extends React.Component {
 

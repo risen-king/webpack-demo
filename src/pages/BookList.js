@@ -15,6 +15,7 @@ class BookList extends  Component{
     }
 
     componentWillMount(){
+
         fetch(listUrl)
             .then(res => res.json())
             .then(res => {

@@ -1,9 +1,11 @@
 import React,{ Component } from 'react'
 import formProvider from '../util/formProvider'
 import FormItem from './FormItem';
-import HomeLayout from '../layouts/HomeLayout';
 
-let baseUrl = 'http://localhost:3000/user';
+import ApiUrl from '../util/apiUrl';
+
+let apiUrl = new ApiUrl('user');
+
 
 class UserEditor extends React.Component {
     componentWillMount(){
@@ -13,13 +15,22 @@ class UserEditor extends React.Component {
         }
     }
 
+    _composeData(form){
+        let data = {};
+        let keys = Object.keys(form);
+        for(let key of keys){
+            data[key] = form[key].value;
+        }
+        return data;
+    }
+
 
 
     handleSubmit (e) {
         e.preventDefault();
         //alert(JSON.stringify(this.state));
 
-        const {form: {name, age, gender}, formValid,editTarget} = this.props;
+        const {form, formValid,editTarget} = this.props;
         if(!formValid){
             alert('请填写正确的信息后重试');
             return ;
@@ -27,14 +38,9 @@ class UserEditor extends React.Component {
 
 
         let opLabel = editTarget ? '编辑' : '添加';
-        let url        = editTarget ? (baseUrl + '/' + editTarget.id) : baseUrl;
-        let method     = editTarget ? 'put' : 'post';
+        let {url,method}  = editTarget ? apiUrl.updateUrl(editTarget.id) : apiUrl.createUrl();
 
-        let data = {
-            name: name.value,
-            age: age.value,
-            gender: gender.value
-        };
+        let data = this._composeData(form);
 
         fetch(url, {
                     method: method,

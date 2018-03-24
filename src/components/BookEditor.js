@@ -1,11 +1,58 @@
 import React,{ Component } from 'react'
 import formProvider from '../util/formProvider'
 import FormItem from './FormItem';
-import HomeLayout from '../layouts/HomeLayout';
+ import AutoComplete from './auto-complete/AutoComplete';
 
 let apiUrl = 'http://localhost:3000/book';
 
 class BookEditor extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            recommendUsers: []
+        }
+    }
+    getRecommendUsers(partialUserId){
+        fetch('http://localhost:3000/user?id_like=' + partialUserId)
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.length === 1 && res[0].id === partialUserId) {
+                    // 如果结果只有1条且id与输入的id一致，说明输入的id已经完整了，没必要再设置建议列表
+                    return;
+                }
+
+                // 设置建议列表
+                this.setState({
+                    recommendUsers: res.map((user) => {
+                        return {
+                            text: `${user.id}(${user.name})`,
+                            value: user.id
+                        }
+                    })
+                });
+
+            })
+    }
+
+    timer = 0;
+    handleOwnerIdChange(value){
+        this.props.onFormChange('owner_id', value);
+        this.setState({recommendUsers: []});
+
+        //
+        if(this.timer){
+            clearTimeout(this.timer);
+        }
+
+        if(value){
+            this.timer = setTimeout(() =>{
+                this.getRecommendUsers(value);
+                this.timer = 0;
+            },200)
+        }
+    }
+
+
     componentWillMount(){
         const {editTarget, setFormValues} = this.props;
         if(editTarget){
@@ -62,6 +109,10 @@ class BookEditor extends React.Component {
 
     render(){
         const {form: {name, price, owner_id},  onFormChange} = this.props;
+        let {recommendUsers} = this.state;
+
+        //let optionItems = [{text: '10000（一韬）', value: 10000}, {text: '10001（张三）', value: 10001}];
+        let optionItems = recommendUsers;
 
         return (
 
@@ -84,10 +135,16 @@ class BookEditor extends React.Component {
 
                 <FormItem label="拥有者：" valid={owner_id.valid} error={owner_id.error}>
 
-                    <input
-                        type="text"
-                        value={owner_id.value || ''}
-                        onChange={(e) => onFormChange('owner_id', +e.target.value)}
+                    {/*<input*/}
+                        {/*type="text"*/}
+                        {/*value={owner_id.value || ''}*/}
+                        {/*onChange={(e) => onFormChange('owner_id', +e.target.value)}*/}
+                    {/*/>*/}
+
+                    <AutoComplete
+                        value={owner_id.value ? owner_id.value + '' : ''}
+                        options={optionItems}
+                        onValueChange={value => this.handleOwnerIdChange(value)}
                     />
                 </FormItem>
 

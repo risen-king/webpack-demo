@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './auto-complete.less';
+const style = require('./auto-complete.less');
 
 function getItemValue (item) {
     return item.value || item;
@@ -16,6 +16,8 @@ class AutoComplete extends  React.Component{
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
+
+        console.log(style)
 
 
     }
@@ -97,8 +99,6 @@ class AutoComplete extends  React.Component{
     render(){
         const {displayValue, activeItemIndex} = this.state;
         const {value, options} = this.props;
-
-        console.log(style)
 
         return (
             <div className={style.wrapper}>

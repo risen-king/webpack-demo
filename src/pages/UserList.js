@@ -1,7 +1,8 @@
 import React,{ Component } from 'react';
 import HomeLayout from '../layouts/HomeLayout';
-let listUrl = 'http://localhost:3000/user';
-let deleteUrl = 'http://localhost:3000/user/:id';
+
+import ApiUrl from '../util/apiUrl';
+let apiUrl = new ApiUrl('user');
 
 class UserList extends  Component{
     constructor(props){
@@ -15,7 +16,8 @@ class UserList extends  Component{
     }
 
     componentWillMount(){
-        fetch(listUrl)
+        let {url,method} = apiUrl.listUrl();
+        fetch(url)
             .then(res => res.json())
             .then(res => {
                 this.setState({
@@ -33,8 +35,8 @@ class UserList extends  Component{
         let confirmed = confirm(`确定要删除用户 ${user.name} 吗？`);
 
         if(confirmed){
-            let url = deleteUrl.replace(':id',user.id)
-            fetch(url,{method: 'delete'})
+            let {url,method} = apiUrl.deleteUrl(user.id)
+            fetch(url,{method: method})
                 .then(res => res.json())
                 .then(res => {
                     this.setState({

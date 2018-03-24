@@ -2,8 +2,8 @@
   "user": [
     {
       "name": "一韬",
-      "price": 99,
-      "owner_id": "",
+      "age": 99,
+      "gender": "",
       "id": 10000
     },
     {
@@ -17,12 +17,6 @@
       "age": 0,
       "gender": "",
       "id": 10002
-    },
-    {
-      "name": "aaa",
-      "age": 4,
-      "gender": "male",
-      "id": 10003
     },
     {
       "name": "nnn",

@@ -35,14 +35,24 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    }
                 ]
             },
             {
                 test: /\.less$/,
                 use: [
                     'style-loader',
-                    "css-loader",
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    },
                     "less-loader"
                 ]
 
@@ -70,8 +80,6 @@ module.exports = {
             template: './src/tpl/index.ejs',
             filename: 'index.html'
         }),
-        //new webpack.HashedModuleIdsPlugin(),
-
         new webpack.HotModuleReplacementPlugin(), // 启用 HMR
         new webpack.NamedModulesPlugin() // 打印日志信息时 webpack 默认使用模块的数字 ID 指代模块，不便于 debug，这个插件可以将其替换为模块的真实路径
 
