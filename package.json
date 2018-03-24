@@ -8,7 +8,8 @@
     "start": "webpack-dev-server --config webpack.config.js --open  --colors",
     "start:dev": "webpack-dev-server --config webpack.dev.js --open  --colors",
     "build:dev": "webpack-dev-server --open --config webpack.dev.js",
-    "build:prod": "webpack --progress --config webpack.prod.js"
+    "build:prod": "webpack --progress --config webpack.prod.js",
+    "mock": "node ./mock/server.js"
   },
   "keywords": [],
   "author": "",

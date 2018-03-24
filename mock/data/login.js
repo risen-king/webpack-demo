@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
         }
     }
 
-    if (_login(username,password)) {
+    if (_login(account,password)) {
         res.header('access-token', Date.now());
         res.json(true);
     } else {

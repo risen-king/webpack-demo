@@ -16,6 +16,8 @@ import BookList from './pages/BookList';
 import BookAdd from './pages/BookAdd';
 import BookEdit from './pages/BookEdit';
 
+import Login from './pages/Login';
+
 const rootEle = document.getElementById('root');
 
 let router = (
@@ -29,6 +31,8 @@ let router = (
         <Route path="/book/list" component={BookList}/>
         <Route path="/book/add" component={BookAdd}/>
         <Route path="/book/edit/:id" component={BookEdit}/>
+
+        <Route path="/login" component={Login}/>
     </Router>
 );
 
