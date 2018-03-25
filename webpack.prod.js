@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const Merge = require('webpack-merge');
-const CommonConfig = require('./webpack.common.js');
+const CommonConfig = require('./trash/webpack.common.js');
 
 let selfConfig = {
     devtool: 'cheap-module-source-map',

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const Merge = require('webpack-merge');
-const CommonConfig = require('./webpack.common.js');
+const CommonConfig = require('./trash/webpack.common.js');
 
 module.exports = {
     devtool: 'inline-source-map',
