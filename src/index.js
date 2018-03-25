@@ -1,52 +1,18 @@
- 
+import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { AppContainer } from 'react-hot-loader'
 import RedBox from 'redbox-react'
-import { Router, Route, hashHistory } from 'react-router'
+import { hashHistory } from 'react-router'
+import Root from './containers/Root'
 
-import HomeLayout from './layouts/HomeLayout';
-
-import Home from './pages/Home'
-
-import UserList from './pages/UserList';
-import UserAdd from './pages/UserAdd';
-import UserEdit from './pages/UserEdit';
-
-import BookList from './pages/BookList';
-import BookAdd from './pages/BookAdd';
-import BookEdit from './pages/BookEdit';
-
-import Login from './pages/Login';
 
 const rootEle = document.getElementById('root');
-
-let router = (
-    <Router history={hashHistory}>
-        <Route component={HomeLayout}>
-            <Route path="/" component={Home}></Route>
-            <Route path="/user/list" component={UserList}/>
-            <Route path="/user/add" component={UserAdd}/>
-            <Route path="/user/edit/:id" component={UserEdit}/>
-
-            <Route path="/book/list" component={BookList}/>
-            <Route path="/book/add" component={BookAdd}/>
-            <Route path="/book/edit/:id" component={BookEdit}/>
-
-        </Route>
-
-        <Route path="/login" component={Login}/>
-    </Router>
-);
-
-function render(router){
+function render(){
     try{
-        //throw new Error('boom');
-
         ReactDOM.render(
             <AppContainer>
-                {router}
+                <Root history={hashHistory} />
             </AppContainer>,
             rootEle
         );
@@ -54,30 +20,33 @@ function render(router){
         ReactDOM.render(
             <RedBox error={e}>
                 <AppContainer>
-                    {router}
+                    <Root history={hashHistory} />
                 </AppContainer>
             </RedBox>,
             rootEle
         );
     }
-
 }
 
-
-
-// render(App);
-//
-// if(module.hot){
-//     module.hot.accept('./components/App', () => {
-//         render(require('./components/App').default)
-//     })
-// }
-
-render(router);
+render();
 
 if(module.hot){
-    module.hot.accept('./components/App', () => {
-        render(router)
+    /**
+     * Warning from React Router, caused by react-hot-loader.
+     * The warning can be safely ignored, so filter it from the console.
+     * Otherwise you'll see it every time something changes.
+     * See https://github.com/gaearon/react-hot-loader/issues/298
+     */
+    const orgError = console.error; // eslint-disable-line no-console
+    console.error = (message) => { // eslint-disable-line no-console
+        if (message && message.indexOf('You cannot change <Router routes>;') === -1) {
+            // Log the error as normally
+            orgError.apply(console, [message]);
+        }
+    };
+
+    module.hot.accept('./containers/Root', () => {
+        render()
     })
 }
 

@@ -15,7 +15,7 @@ export default function request (method, url, body) {
         body = body && JSON.stringify(body);
     }
 
- 
+
     return fetch(url, {
         method,
         headers: {
