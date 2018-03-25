@@ -1,5 +1,7 @@
-import React from 'react'
-const style = require('./auto-complete.less');
+import React, { PropTypes } from 'react';
+import { Input } from 'antd';
+import style from './auto-complete.less';
+
 
 function getItemValue (item) {
     return item.value || item;
@@ -10,6 +12,7 @@ class AutoComplete extends  React.Component{
         super(props);
 
         this.state = {
+            show: false, // 新增的下拉框显示控制开关
             displayValue: '',
             activeItemIndex: -1
         }
@@ -24,7 +27,8 @@ class AutoComplete extends  React.Component{
 
     handleChange (value) {
         this.setState({activeItemIndex: -1, displayValue: ''});
-        this.props.onValueChange(value);
+        // 原来的onValueChange改为了onChange以适配antd的getFieldDecorator
+        this.props.onChange(value);
     }
 
     handleKeyDown (e) {
@@ -97,18 +101,19 @@ class AutoComplete extends  React.Component{
     }
 
     render(){
-        const {displayValue, activeItemIndex} = this.state;
+        const {show, displayValue, activeItemIndex} = this.state;
         const {value, options} = this.props;
 
         return (
             <div className={style.wrapper}>
-                <input
-                    type="text"
+                <Input
                     value={displayValue || value}
                     onChange={e => this.handleChange(e.target.value)}
                     onKeyDown={this.handleKeyDown}
+                    onFocus={() => this.setState({show: true})}
+                    onBlur={() => this.setState({show: false})}
                 />
-                {options.length > 0 && (
+                {show && options.length > 0 && (
                     <ul
                         className={style.options}
                         onMouseLeave={this.handleLeave}
@@ -136,9 +141,9 @@ class AutoComplete extends  React.Component{
 
 // 通用组件最好写一下propTypes约束
 AutoComplete.propTypes = {
-    value: React.PropTypes.string.isRequired,
-    options: React.PropTypes.array.isRequired,
-    onValueChange: React.PropTypes.func.isRequired
+    value: PropTypes.any,
+    options: PropTypes.array,
+    onChange: PropTypes.func // 原来的onValueChange改为了onChange以适配antd的getFieldDecorator
 };
 
 export  default  AutoComplete;

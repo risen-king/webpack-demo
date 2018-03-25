@@ -16,7 +16,7 @@ server.use(jsonServer.defaults())
 
 server.post('/login', loginMiddleware)
 
-server.use(authMiddleWare);
+//server.use(authMiddleWare);
 
 server.use(router);
 

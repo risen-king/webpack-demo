@@ -6,6 +6,8 @@ import { AppContainer } from 'react-hot-loader'
 import RedBox from 'redbox-react'
 import { Router, Route, hashHistory } from 'react-router'
 
+import HomeLayout from './layouts/HomeLayout';
+
 import Home from './pages/Home'
 
 import UserList from './pages/UserList';
@@ -22,15 +24,17 @@ const rootEle = document.getElementById('root');
 
 let router = (
     <Router history={hashHistory}>
-        <Route path="/" component={Home}></Route>
+        <Route component={HomeLayout}>
+            <Route path="/" component={Home}></Route>
+            <Route path="/user/list" component={UserList}/>
+            <Route path="/user/add" component={UserAdd}/>
+            <Route path="/user/edit/:id" component={UserEdit}/>
 
-        <Route path="/user/list" component={UserList}/>
-        <Route path="/user/add" component={UserAdd}/>
-        <Route path="/user/edit/:id" component={UserEdit}/>
+            <Route path="/book/list" component={BookList}/>
+            <Route path="/book/add" component={BookAdd}/>
+            <Route path="/book/edit/:id" component={BookEdit}/>
 
-        <Route path="/book/list" component={BookList}/>
-        <Route path="/book/add" component={BookAdd}/>
-        <Route path="/book/edit/:id" component={BookEdit}/>
+        </Route>
 
         <Route path="/login" component={Login}/>
     </Router>

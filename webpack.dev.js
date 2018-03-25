@@ -33,12 +33,28 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                exclude: /node_modules|antd\.css/,
                 use: [
                     'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true
+                            modules: true,
+                            localIdentName: '[name]__[local]__[hash:base64:5]'
+                        }
+                    }
+                ]
+            },
+            // antd 样式配置文件
+            {
+                test: /\.css$/,
+                include: /node_modules|antd\.css/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
                         }
                     }
                 ]

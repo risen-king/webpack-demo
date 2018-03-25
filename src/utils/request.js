@@ -1,6 +1,12 @@
 import { hashHistory } from 'react-router';
+let apiHost = 'http://localhost:3000/';
 
 export default function request (method, url, body) {
+
+    if(!url.indexOf('http')){
+        url = apiHost + url;
+    }
+
     method = method.toUpperCase();
     if (method === 'GET') {
         // fetch的GET不允许有body，参数只能放在url中
@@ -9,6 +15,7 @@ export default function request (method, url, body) {
         body = body && JSON.stringify(body);
     }
 
+ 
     return fetch(url, {
         method,
         headers: {
